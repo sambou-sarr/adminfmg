@@ -30,7 +30,7 @@ Route::get('/run-migrations', function () {
 
     // 2️⃣ Départements
     Artisan::call('migrate', [
-        '--path' => 'database/migrations/2025_01_01_000000_create_departements_table.php',
+        '--path' => 'database/migrations/2025_11_20_170638_create_departements_table.php',
         '--force' => true,
     ]);
 
