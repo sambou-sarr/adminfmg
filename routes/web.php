@@ -40,11 +40,6 @@ Route::get('/run-migrations', function () {
         '--force' => true,
     ]);
 
-    // 4️⃣ Autres tables dépendantes des utilisateurs
-    Artisan::call('migrate', [
-        '--path' => 'database/migrations/2025_02_01_000000_create_roles_table.php',
-        '--force' => true,
-    ]);
 
     Artisan::call('migrate', [
         '--path' => 'database/migrations/2025_02_01_000001_create_permissions_table.php',
