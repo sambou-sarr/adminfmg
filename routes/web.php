@@ -41,11 +41,6 @@ Route::get('/run-migrations', function () {
     ]);
 
 
-    Artisan::call('migrate', [
-        '--path' => 'database/migrations/2025_02_01_000001_create_permissions_table.php',
-        '--force' => true,
-    ]);
-
     // 5️⃣ Toutes les autres tables restantes
     Artisan::call('migrate', [
         '--force' => true,
