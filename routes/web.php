@@ -24,11 +24,13 @@ Route::get('/create-admin', function () {
 });
 
 Route::get('/run-migrations', function () {
-
+ Artisan::call('session:table');
     // Lancer les migrations
     Artisan::call('migrate', [
         '--force' => true, // Pour ignorer la confirmation en prod
     ]);
+   
+            Artisan::call('migrate', ['--force' => true]);
 
     return 'Migrations exécutées avec succès !';
 });

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nom')->unique();
             $table->text('description')->nullable();
-            $table->integer('id_manager');
             $table->timestamps();
         });
     }
