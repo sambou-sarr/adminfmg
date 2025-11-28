@@ -49,3 +49,12 @@ Route::get('/run-migrations', function () {
     return "Toutes les migrations ont été exécutées avec succès !";
 });
 
+
+Route::get('/publish-filament-assets', function () {
+    Artisan::call('vendor:publish', [
+        '--tag' => 'filament-assets',
+        '--force' => true
+    ]);
+
+    return "Assets Filament publiés !";
+});
