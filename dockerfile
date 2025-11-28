@@ -13,7 +13,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     libpq-dev \
     libzip-dev \
-    && docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip \
+    libicu-dev \
+    && docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip intl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
