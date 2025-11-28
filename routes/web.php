@@ -23,14 +23,39 @@ Route::get('/create-admin', function () {
     return "Admin créé avec succès : " .  $superAdmin->username;
 });
 
-Route::get('/run-migrations', function () {
- Artisan::call('session:table');
-    // Lancer les migrations
-    Artisan::call('migrate', [
-        '--force' => true, // Pour ignorer la confirmation en prod
-    ]);
-   
-            Artisan::call('migrate', ['--force' => true]);
 
-    return 'Migrations exécutées avec succès !';
+Route::get('/run-migrations', function () {
+    // 1️⃣ Sessions
+    Artisan::call('session:table');
+
+    // 2️⃣ Départements
+    Artisan::call('migrate', [
+        '--path' => 'database/migrations/2025_01_01_000000_create_departements_table.php',
+        '--force' => true,
+    ]);
+
+    // 3️⃣ Utilisateurs
+    Artisan::call('migrate', [
+        '--path' => 'database/migrations/0001_01_01_000000_create_users_table.php',
+        '--force' => true,
+    ]);
+
+    // 4️⃣ Autres tables dépendantes des utilisateurs
+    Artisan::call('migrate', [
+        '--path' => 'database/migrations/2025_02_01_000000_create_roles_table.php',
+        '--force' => true,
+    ]);
+
+    Artisan::call('migrate', [
+        '--path' => 'database/migrations/2025_02_01_000001_create_permissions_table.php',
+        '--force' => true,
+    ]);
+
+    // 5️⃣ Toutes les autres tables restantes
+    Artisan::call('migrate', [
+        '--force' => true,
+    ]);
+
+    return "Toutes les migrations ont été exécutées avec succès !";
 });
+
