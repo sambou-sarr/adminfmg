@@ -2,8 +2,8 @@
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', function () {
     // Redirige l'utilisateur vers la page d'accueil (Dashboard) du panel 'admin' de Filament
@@ -21,4 +21,14 @@ Route::get('/create-admin', function () {
         ]);
 
     return "Admin créé avec succès : " .  $superAdmin->username;
+});
+
+Route::get('/run-migrations', function () {
+
+    // Lancer les migrations
+    Artisan::call('migrate', [
+        '--force' => true, // Pour ignorer la confirmation en prod
+    ]);
+
+    return 'Migrations exécutées avec succès !';
 });
