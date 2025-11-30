@@ -53,7 +53,6 @@ class ManagerPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                 \App\Http\Middleware\FilamentRoleRedirect::class . ':manager',
             ]);
     }
 }

@@ -23,7 +23,6 @@ Route::get('/create-admin', function () {
     return "Admin créé avec succès : " .  $superAdmin->username;
 });
 
-
 Route::get('/run-migrations', function () {
     // 1️⃣ Sessions
     Artisan::call('session:table');
@@ -57,4 +56,10 @@ Route::get('/publish-filament-assets', function () {
     ]);
 
     return "Assets Filament publiés !";
+});
+Route::get('/clear-cache', function () {
+    Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:clear');
+    return "Cache vidé !";
 });
