@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libzip-dev \
     libicu-dev \
+    # Nettoyage et installation des extensions
     && docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip intl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -27,7 +28,7 @@ WORKDIR /var/www
 # Copier le projet
 COPY . .
 
-# Permissions
+# Permissions (Bonne pratique pour Laravel)
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
