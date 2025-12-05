@@ -30,23 +30,7 @@ Route::get('/create-admin', function () {
 });
 
 Route::get('/run-migrations', function () {
-    // 1️⃣ Sessions
-    Artisan::call('session:table');
 
-    // 2️⃣ Départements
-    Artisan::call('migrate', [
-        '--path' => 'database/migrations/2025_11_20_170638_create_departements_table.php',
-        '--force' => true,
-    ]);
-
-    // 3️⃣ Utilisateurs
-    Artisan::call('migrate', [
-        '--path' => 'database/migrations/0001_01_01_000000_create_users_table.php',
-        '--force' => true,
-    ]);
-
-
-    // 5️⃣ Toutes les autres tables restantes
     Artisan::call('migrate', [
         '--force' => true,
     ]);
