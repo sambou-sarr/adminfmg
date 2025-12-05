@@ -11,31 +11,59 @@ class CommandeInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('prenom'),
-                TextEntry::make('nom'),
-                TextEntry::make('telephone')
-                    ->numeric(),
-                TextEntry::make('adresse'),
-                TextEntry::make('quantite')
-                    ->numeric(),
-                TextEntry::make('email')
-                    ->label('Email address')
-                    ->placeholder('-'),
-                TextEntry::make('numero_commande'),
+
+                // 🔥 INFOS CLIENT
+
+
+TextEntry::make('Prénoms')
+    ->getStateUsing(fn ($record) => $record->client?->prenom),
+
+TextEntry::make('Nom')
+    ->getStateUsing(fn ($record) => $record->client?->nom),
+
+TextEntry::make('Téléphone')
+    ->getStateUsing(fn ($record) => $record->client?->telephone),
+
+TextEntry::make('Email')
+    ->getStateUsing(fn ($record) => $record->client?->email),
+
+TextEntry::make('Adresse')
+    ->getStateUsing(fn ($record) => $record->client?->adresse),
+
+TextEntry::make('Type de client')
+    ->getStateUsing(fn ($record) => $record->client?->type_client)
+    ->badge(),
+
+TextEntry::make('Entreprise')
+    ->getStateUsing(fn ($record) => $record->client?->nom_entreprise ?? '-'),
+
+TextEntry::make('NINEA')
+    ->getStateUsing(fn ($record) => $record->client?->ninea ?? '-'),
+
+TextEntry::make('RCCM')
+    ->getStateUsing(fn ($record) => $record->client?->rccm ?? '-'),
+
+                // 🔥 INFOS COMMANDE
+                TextEntry::make('numero_commande')
+                    ->label('Numéro commande'),
+
                 TextEntry::make('montant_total')
-                    ->numeric(),
+                    ->numeric()
+                    ->label('Montant total'),
+
                 TextEntry::make('statut')
                     ->badge(),
+
                 TextEntry::make('notes')
                     ->placeholder('-')
                     ->columnSpanFull(),
+
                 TextEntry::make('created_at')
-                    ->label('date de commande')
-                    ->dateTime()
-                    ->placeholder('-'),
+                    ->label('Date de commande')
+                    ->dateTime(),
+
                 TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                    ->dateTime(),
             ]);
     }
 }

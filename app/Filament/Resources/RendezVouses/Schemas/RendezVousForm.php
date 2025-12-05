@@ -19,7 +19,7 @@ class RendezVousForm
                 ->schema([
                     Select::make('user_id')
                         ->label('Utilisateur')
-                        ->relationship('user', 'name')
+                        ->relationship('user', 'prenom')
                         ->required(),
 
                     TextInput::make('sujet')
@@ -42,8 +42,10 @@ class RendezVousForm
 
                     TextInput::make('client_contact')
                         ->label('Contact du client')
+                        ->tel(),
+                    TextInput::make('client_email')
+                        ->label('email du client')
                         ->tel()
-                        ->required(),
                 ])
                 ->columns(2),
 

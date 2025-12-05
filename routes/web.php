@@ -1,10 +1,16 @@
 <?php
 
+use App\Exports\ClientsExport;
+use App\Exports\CommandesExport;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ClientExcelController;
+use App\Http\Controllers\CommandeController;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CommandeImportController;
+use Maatwebsite\Excel\Facades\Excel;
 Route::get('/', function () {
     // Redirige l'utilisateur vers la page d'accueil (Dashboard) du panel 'admin' de Filament
     return redirect()->route('filament.admin.pages.dashboard');
@@ -63,3 +69,23 @@ Route::get('/clear-cache', function () {
     Artisan::call('view:clear');
     return "Cache vidé !";
 });
+
+
+Route::get('/commande/suivi/{token}', [CommandeController::class, 'showByToken'])->name('commande.suivi');
+Route::post('/commande/update/{token}', [CommandeController::class, 'update'])->name('commande.update');
+    
+Route::get('/commandes/{id}/pdf', [CommandeController::class, 'generatePDF'])->name('commandes.pdf');
+Route::get('/commandes/form/client', [CommandeController::class, 'afiicheform']);
+Route::post('/commandes/form/client', [CommandeController::class, 'ajout_commande_client'])->name('commande.envoi');
+
+
+Route::get('/commandes/import', [CommandeImportController::class, 'formimport'])->name('form.commandes.import');
+Route::post('/commandes/import', [CommandeImportController::class, 'import'])->name('commandes.import');
+
+Route::get('/exportCommande', function () {
+    return Excel::download(new CommandesExport, 'commandes.xlsx');
+})->name('commandes.export');
+
+
+Route::get('/clients/export', [ClientExcelController::class, 'export'])->name('clients.export');
+Route::get('/clients/panier', [ClientController::class, 'index']);

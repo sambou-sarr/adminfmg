@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\Commandes\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Barryvdh\DomPDF\Facade\Pdf; 
 
 class CommandesTable
 {
@@ -15,28 +17,48 @@ class CommandesTable
     {
         return $table
             ->columns([
-                TextColumn::make('prenom')
+                TextColumn::make('client.prenom')
+                    ->label('Prénom')
                     ->searchable(),
-                TextColumn::make('nom')
+
+                TextColumn::make('client.nom')
+                    ->label('Nom')
                     ->searchable(),
-                TextColumn::make('telephone')
-                    ->numeric()
+
+                TextColumn::make('client.telephone')
+                    ->label('Téléphone')
                     ->sortable(),
-                TextColumn::make('adresse')
+
+                TextColumn::make('client.email')
+                    ->label('Email')
                     ->searchable(),
-                TextColumn::make('quantite')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('email')
-                    ->label('Email address')
+
+                TextColumn::make('client.adresse')
+                    ->label('Adresse')
                     ->searchable(),
+
                 TextColumn::make('numero_commande')
                     ->searchable(),
                 TextColumn::make('montant_total')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('statut')
-                    ->badge(),
+                    ->badge()
+                    ->colors([
+                        'warning' => 'en_attente',
+                        'info'    => 'en cours',
+                        'success' => 'livrer',
+                        'danger'  => 'annuler',
+                        'primary' => 'confirmer',
+                    ])
+                    ->icons([
+                        'heroicon-o-clock'   => 'en_attente',
+                        'heroicon-o-check'   => 'confirmer',
+                        'heroicon-o-truck'   => 'en cours',
+                        'heroicon-o-gift'    => 'livrer',
+                        'heroicon-o-x-circle'=> 'annuler',
+                    ]),
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -52,11 +74,18 @@ class CommandesTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                Action::make('generate_pdf')
+                    ->label('Bon de commande')
+                    ->icon('heroicon-o-document-text')
+                    ->color('secondary')
+                    ->url(fn ($record) => route('commandes.pdf', $record->id)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
+
+
             ]);
     }
 }

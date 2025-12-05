@@ -29,13 +29,6 @@ class UserForm
                     ->label('MOT DE PASSE')
                     ->password()
                     ->required(),
-                Select::make('departement_id')  
-                    ->label('DEPARTEMENT')
-                    ->options(function () {
-                        return Departement::all()->pluck('nom', 'id')->toArray();
-                    })
-                    ->searchable() 
-                    ->required(),
                 Select::make('role_id')  
                     ->label('Role')
                     ->options(function () {

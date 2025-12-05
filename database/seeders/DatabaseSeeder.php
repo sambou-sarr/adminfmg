@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'sergesilva@gmail.com', // L'email de connexion
             'password' => Hash::make('12345678'), // Mot de passe facile pour le test
             'email_verified_at' => now(),
-        ]);
+        ])->assignRole('super_admin');
 
         // 3. ASSIGNER LE RÔLE
         $superAdmin->assignRole('super_admin');

@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Departements\Pages;
+namespace App\Filament\Resources\Clients\Pages;
 
-use App\Filament\Resources\Departements\DepartementResource;
+use App\Filament\Resources\Clients\ClientResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditDepartement extends EditRecord
+class EditClient extends EditRecord
 {
-    protected static string $resource = DepartementResource::class;
+    protected static string $resource = ClientResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,20 +12,17 @@ return new class extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->string('prenom');
-            $table->string('nom');
-            $table->integer('telephone');
-            $table->string('adresse');
-            $table->integer('quantite');
-            $table->string('email')->nullable();
+            $table->string('token', 64)->nullable();
+            $table->string('choix_livraison')->nullable();
+            $table->string('choix_paiement')->nullable();
             $table->string('numero_commande')->nullable()->unique();
-            $table->decimal('montant_total', 10, 2)->default(0);
-            $table->enum('statut', ['en attente', 'confirmée', 'en cours', 'livrée', 'annulée'])->default('en attente');
+            $table->integer('montant_total')->default(0);
+            $table->foreignId('id_client')->constrained('clients');
+            $table->enum('statut', ['en_attente', 'confirmer', 'en cours', 'livrer', 'annuler'])->default('en_attente');
             $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

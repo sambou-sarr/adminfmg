@@ -10,19 +10,24 @@ use App\Filament\Resources\Commandes\Schemas\CommandeForm;
 use App\Filament\Resources\Commandes\Schemas\CommandeInfolist;
 use App\Filament\Resources\Commandes\Tables\CommandesTable;
 use App\Models\Commande;
-use BackedEnum;
+use App\Models\User;
+
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class CommandeResource extends Resource
 {
     protected static ?string $model = Commande::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // ✅ Utiliser la chaîne de caractères pour l’icône
 
     protected static ?string $recordTitleAttribute = 'numero_commande';
+
+    /* -------------------------------------------------------------------
+        FORM / TABLE / INFOLIST
+    ------------------------------------------------------------------- */
 
     public static function form(Schema $schema): Schema
     {
@@ -41,9 +46,7 @@ class CommandeResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -54,5 +57,51 @@ class CommandeResource extends Resource
             'view' => ViewCommande::route('/{record}'),
             'edit' => EditCommande::route('/{record}/edit'),
         ];
+    }
+
+    /* -------------------------------------------------------------------
+        AUTORISATIONS (ADMIN + SUPER_ADMIN)
+    ------------------------------------------------------------------- */
+
+    public static function canAccess(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user?->hasRole(['super_admin', 'admin']) ?? false;
+    }
+
+    public static function canViewAny(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user?->hasRole(['super_admin', 'admin']) ?? false;
+    }
+
+    public static function canCreate(): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user?->hasRole(['super_admin', 'admin']) ?? false;
+    }
+
+    public static function canView(mixed $record): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user?->hasRole(['super_admin', 'admin']) ?? false;
+    }
+
+    public static function canEdit(mixed $record): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user?->hasRole(['super_admin', 'admin']) ?? false;
+    }
+
+    public static function canDelete(mixed $record): bool
+    {
+        /** @var User|null $user */
+        $user = Auth::user();
+        return $user?->hasRole(['super_admin', 'admin']) ?? false;
     }
 }

@@ -25,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-         Schema::defaultStringLength(91);
+        Schema::defaultStringLength(191);
+        
          Tache::observe(TacheObserver::class);
         /// URL::forceScheme('https');
             // Gate pour le panel admin

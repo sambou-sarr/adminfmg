@@ -23,9 +23,7 @@ return new class extends Migration
             // Échéance
             $table->date('due_date')->nullable();
 
-            // Priorité et statut de la tâche
-            $table->enum('priorite', ['basse', 'moyenne', 'haute'])->default('moyenne');
-            $table->enum('statut', ['à faire', 'en cours', 'terminée'])->default('à faire');
+            $table->enum('statut', ['en_attente', 'en cours', 'terminée'])->default('en_attente');
 
             $table->timestamps();
         });

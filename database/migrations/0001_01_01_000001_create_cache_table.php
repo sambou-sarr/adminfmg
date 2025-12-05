@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
+   // Supprime la table si elle existe déjà
+        Schema::dropIfExists('cache');
         Schema::create('cache', function (Blueprint $table) {
-            $table->string('key',500)->primary();
+            $table->string('key', 191)->primary();
             $table->mediumText('value');
             $table->integer('expiration');
         });
 
+        Schema::dropIfExists('cache_locks');
         Schema::create('cache_locks', function (Blueprint $table) {
-            $table->string('key')->primary();
+            $table->string('key', 191)->primary();
             $table->string('owner');
             $table->integer('expiration');
         });

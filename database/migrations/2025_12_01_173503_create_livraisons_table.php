@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('departements', function (Blueprint $table) {
+        Schema::create('livraisons', function (Blueprint $table) {
             $table->id();
-            $table->string('nom')->unique();
-            $table->text('description')->nullable();
+            $table->integer("id_commande");
+            $table->enum('statut', ['en_attente', 'confirmer', 'en cours', 'livrer', 'annuler'])->default('en_attente');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('departements');
+        Schema::dropIfExists('livraisons');
     }
 };

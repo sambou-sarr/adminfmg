@@ -24,13 +24,14 @@ return new class extends Migration
             // Client (pour la simplicité, nous stockons le nom directement)
             $table->string('client_nom');
             $table->string('client_contact')->nullable(); // Téléphone ou Email
+            $table->string('client_email')->nullable();
             $table->string('rapport')->nullable();
             // Horaires
             $table->dateTime('start_at');
             $table->dateTime('end_at');
 
             // Statut du RDV
-            $table->enum('statut', ['planifié', 'terminé', 'annulé'])->default('planifié');
+            $table->enum('statut', ['en_attente', 'confirmer', 'en_cours','terminer',])->default('en_attente');
 
             $table->timestamps();
         });
